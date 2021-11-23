@@ -1,0 +1,36 @@
+:root {
+  --color__primary: white;
+  --color__secondary: black;
+  --color__tertiary: gray;
+  --color__success: green;
+
+  --border__radius: 0.6em;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  letter-spacing: 0.12em;
+}
+
+body,
+html,
+#root {
+  height: 100%;
+}
+
+body {
+  background: var(--color__primary);
+  color: var(--color__secondary);
+}
+
+.App {
+  height: 100%;
+  font-family: sans-serif;
+  text-align: center;
+}
+
+.bgHidden:hover {
+  background: unset !important;
+}

@@ -1,0 +1,147 @@
+.signup__wrapper {
+  height: 100%;
+  width: 100%;
+  max-width: 400px;
+  margin: auto;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.signup__wrapper > p {
+  margin: 0.6em;
+}
+
+.signup__heading {
+  margin-bottom: 0.6em;
+}
+
+.signup__inputContainer {
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+  margin: 0.6em 0px;
+  padding: 0.6em;
+  border-radius: var(--border__radius);
+  border: var(--color__secondary) solid thin;
+}
+
+.signup__inputContainer__validated {
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+  margin: 0.6em 0px;
+  padding: 0.6em;
+  border-radius: var(--border__radius);
+  animation: border_animation 0.5s linear forwards;
+}
+
+.signup__inputIcon {
+  margin-right: 0.6em;
+  font-size: 1.5em;
+}
+
+.signup__inputIcon__validated {
+  color: var(--color__success);
+  margin-right: 0.6em;
+  font-size: 1.5em;
+  animation: pop 0.5s;
+}
+
+.signup__inputField {
+  outline: none;
+  border: none;
+  background: transparent;
+  width: 100%;
+  font-size: inherit;
+}
+
+.signup__signupBtn {
+  width: 100%;
+  margin: 0.6em 0px;
+  padding: 0.8em;
+  border-radius: var(--border__radius);
+  border: var(--color__secondary) solid thin;
+  font-weight: bold;
+}
+
+.signup__signupBtn:hover {
+  color: var(--color__primary);
+  background-color: var(--color__secondary);
+  cursor: pointer;
+}
+
+.signup__socialLogin__wrapper {
+  width: 100%;
+  display: flex;
+  margin: 0.6em 0px;
+  border-radius: var(--border__radius);
+  overflow: hidden;
+}
+
+.signup__socialLoginBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 5px 0.6em;
+  margin: 0.8px;
+  flex-grow: 1;
+  color: var(--color__primary);
+  background: var(--color__tertiary);
+}
+
+.signup__socialLoginBtn:hover {
+  background-color: var(--color__secondary);
+  cursor: pointer;
+}
+
+.signup__socialLoginBtn > svg {
+  margin: 0.6em;
+}
+
+.signup__signupContainer {
+  margin-top: 0.6em;
+  color: var(--color__tertiary);
+}
+
+.signup__signupContainer > a {
+  color: var(--color__tertiary);
+  text-decoration: underline;
+}
+
+.signup__signupContainer > a:hover {
+  color: var(--color__secondary);
+}
+
+/* keyframes */
+@keyframes pop {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes border_animation {
+  0% {
+    border-left: var(--color__success) solid thin;
+  }
+  25% {
+    border-bottom: var(--color__success) solid thin;
+  }
+  50% {
+    border-right: var(--color__success) solid thin;
+  }
+  75% {
+    border-top: var(--color__success) solid thin;
+  }
+  100% {
+    border: var(--color__success) solid thin;
+  }
+}
