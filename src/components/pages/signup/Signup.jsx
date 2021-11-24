@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Spinner } from "../../shared";
 import { MdOutlineVpnKey, MdOutlineMail } from "react-icons/md";
 import { BsGoogle, BsFacebook } from "react-icons/bs";
@@ -9,33 +9,44 @@ export function Signup() {
   // declaring consts
   const [input, setInput] = useState({});
   const [loader, setLoader] = useState(false);
+  const [error, setError] = useState("");
+  const history = useHistory();
 
   // utill functions
   async function signUp() {
     const emailObj = input.signup__email;
     const passwordObj = input.signup__password;
 
-    if (!emailObj.validationPassed || !passwordObj.validationPassed) {
+    if (!emailObj?.validationPassed || !passwordObj?.validationPassed) {
       return;
     }
 
-    setLoader(true);
     try {
+      setLoader(true);
       const options = {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "Accept": "*/*" },
         body: JSON.stringify({
           email: emailObj.value,
           password: passwordObj.value
         })
       };
-      const response = await fetch("http://localhost:3000/signup", options);
+      const response = await fetch("http://localhost:3001/signup", options);
       const json_res = await response.json();
-      console.log(json_res);
+
+      setLoader(false);
+      if (json_res.status) {
+        if (json_res.token) {
+          localStorage.setItem("AUTH_TOKEN", json_res.token)
+          history.push("/")
+        }
+      } else {
+        console.log(json_res);
+        setError(String(json_res.error))
+      }
+
     } catch (error) {
       console.log(error);
-    } finally {
-      setLoader(false);
     }
   }
 
@@ -146,6 +157,7 @@ export function Signup() {
         {loader ? <Spinner /> : "Signup"}
       </a>
 
+      {error ? <div className="error_wrapper"><p>* {error}</p></div> : null}
       <p>or signup with</p>
 
       <div className={style.signup__socialLogin__wrapper}>

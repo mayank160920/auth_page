@@ -3,6 +3,7 @@
   --color__secondary: black;
   --color__tertiary: gray;
   --color__success: green;
+  --color__error: red;
 
   --border__radius: 0.6em;
 }
@@ -33,4 +34,9 @@ body {
 
 .bgHidden:hover {
   background: unset !important;
+}
+
+.error_wrapper {
+  color: var(--color__error);
+  font-size: 0.8rem;
 }

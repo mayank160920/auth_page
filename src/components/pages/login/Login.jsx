@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Spinner } from "../../shared";
 import { MdOutlineVpnKey, MdOutlineMail } from "react-icons/md";
 import { BsGoogle, BsFacebook } from "react-icons/bs";
@@ -9,8 +9,47 @@ export function Login() {
   // declaring consts
   const [input, setInput] = useState({});
   const [loader, setLoader] = useState(false);
+  const [error, setError] = useState("");
+  const history = useHistory();
 
   // utill functions
+  async function logIn() {
+    const emailObj = input.login__email;
+    const passwordObj = input.login__password;
+
+    if (!emailObj?.validationPassed || !passwordObj?.validationPassed) {
+      return;
+    }
+
+    try {
+      setLoader(true);
+      const options = {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "*/*" },
+        body: JSON.stringify({
+          email: emailObj.value,
+          password: passwordObj.value
+        })
+      };
+      const response = await fetch("http://localhost:3001/login", options);
+      const json_res = await response.json();
+
+      setLoader(false);
+      if (json_res.status) {
+        if (json_res.token) {
+          localStorage.setItem("AUTH_TOKEN", json_res.token)
+          history.push("/")
+        }
+      } else {
+        console.log(json_res);
+        setError(String(json_res.error))
+      }
+
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   function validateInput(identifier, value) {
     switch (identifier) {
       case "login__email":
@@ -117,11 +156,12 @@ export function Login() {
 
       <a
         className={`${style.login__loginBtn} ${loader ? "bgHidden" : ""}`}
-        onClick={() => setLoader(!loader)}
+        onClick={() => logIn()}
       >
         {loader ? <Spinner /> : "Login"}
       </a>
 
+      {error ? <div className="error_wrapper"><p>* {error}</p></div> : null}
       <p>or login with</p>
 
       <div className={style.login__socialLogin__wrapper}>
